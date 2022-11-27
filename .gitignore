@@ -1,2 +1,3 @@
 venv/
 .ipynb_checkpoints/
+data/yahoo_finance_unmerged/
