@@ -2,6 +2,9 @@ import pandas as pd
 import json
 
 HIGHLY_CORRELATED_FEATURES = ['MIG_CAG', 'MIG_ING', 'MIG_NDCOG', 'ExchangeRate', 'import_unit_value_index_usd']
+# TARGET_PATH = 'processed_data/Target.csv'
+TARGET_PATH = 'processed_data/Target_with_new_sectors.csv'
+FEATURE_PATH = 'processed_data/Features_2008.csv'
 
 def get_ticker(df, name):
     cond = df['ticker'] == name
@@ -9,10 +12,10 @@ def get_ticker(df, name):
 
 def load_dataframes():
     # Loading data
-    path = 'processed_data/Features_2008.csv'
+    path = FEATURE_PATH
     feature = pd.read_csv(path, index_col=0, parse_dates=['date'])
 
-    path = 'processed_data/Target.csv'
+    path = TARGET_PATH
     target = pd.read_csv(path, index_col=[0], parse_dates=['date'])
     
     return feature, target

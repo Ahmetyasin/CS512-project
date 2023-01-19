@@ -67,6 +67,7 @@ def load_data_general(
     drop_corr_features=True,
     encoding_method=None,
     drop=False,
+    feature_pct_change=0,
     year_range=(2008, 2016)
 ):
     '''
@@ -75,6 +76,10 @@ def load_data_general(
     
     feature, target = load_dataframes()
     
+    # Computing the monthly change in features
+    if feature_pct_change > 0:
+        feature[feature.columns[3:]] = feature[feature.columns[3:]].pct_change(feature_pct_change)
+        
     target = trim_sectors(target, min_tickers=5)
     shifted_target = process_target_data(target, n_months, pct_change)
     
@@ -106,6 +111,7 @@ def load_data_sector(
     drop_corr_features=True,
     encoding_method=None,
     drop=False,
+    feature_pct_change=0,
     year_range=(2008, 2016)
 ):
     '''
@@ -114,6 +120,10 @@ def load_data_sector(
     
     feature, target = load_dataframes()
     
+    # Computing the monthly change in features
+    if feature_pct_change > 0:
+        feature[feature.columns[3:]] = feature[feature.columns[3:]].pct_change(feature_pct_change)
+        
     target = trim_sectors(target, min_tickers=5)
     shifted_target = process_target_data(target, n_months, pct_change)
     

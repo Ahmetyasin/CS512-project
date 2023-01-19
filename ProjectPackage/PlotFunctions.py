@@ -47,8 +47,9 @@ def plot_metric_by_months_sector(all_scores, metric='MAE', ax=None, linestyle='-
     
     x = list(map(int, x))
     
-    colors = ["#fd7f6f", "#7eb0d5", "#b2e061", "#ffee65", "#8bd3c7"]
-    for sector, color in zip(sectors, colors):
+#     colors = ["#fd7f6f", "#7eb0d5", "#b2e061", "#ffee65", "#8bd3c7"]
+
+    for sector in sectors:
         score_arr = []
         std_arr = []
         
@@ -63,7 +64,7 @@ def plot_metric_by_months_sector(all_scores, metric='MAE', ax=None, linestyle='-
         low = score_arr - 2*std_arr
         upp = score_arr + 2*std_arr
 
-        ax.plot(x, score_arr, label=f'{sector} Avg 5-fold {metric}', color=color, linestyle=linestyle)
+        ax.plot(x, score_arr, label=f'{sector} Avg 5-fold {metric}', linestyle=linestyle)
 #         ax.fill_between(x=x, y1=low, y2=upp, alpha=0.2, color=color)
         
     ax.set_xlabel('Months ahead')

@@ -27,7 +27,7 @@ class RFRegressor:
         scoring = {'R2': 'r2', 'MSE': 'neg_mean_squared_error'}
 
         grid = GridSearchCV(estimator=pipe, param_grid=param_grid,
-                            scoring=scoring, refit='R2', cv=cv, verbose=2)
+                            scoring=scoring, refit='MSE', cv=cv, verbose=2)
 
         return pipe, grid
 
@@ -37,27 +37,40 @@ class RFRegressor:
             n_estimators=[50, 100, 300],
             min_samples_leaf=[10, 20, 50, 100],
             max_samples=[0.5, 0.75, 1],
-            cv=5):
+            cv=5, fit_grid=False):
         """
         Find the best parameters using grid search and fit the model using these parameters.
         """
-        # Creating pipeline and grid search
-        pipe, grid = self.create_grid(n_estimators, min_samples_leaf, max_samples, cv)
+        
+        if fit_grid:
+            # Creating pipeline and grid search
+            pipe, grid = self.create_grid(n_estimators, min_samples_leaf, max_samples, cv)
 
-        # Fitting grid search
-        grid.fit(X_train, y_train)
+            # Fitting grid search
+            grid.fit(X_train, y_train)
 
-        # Updating pipeline parameters
-        print(grid.best_params_)
-        pipe.set_params(**grid.best_params_)
+            # Updating pipeline parameters
+            print(grid.best_params_)
+            
+            model = RandomForestRegressor(n_jobs=2, **grid.best_params_)
+            
+        else:
+            model = RandomForestRegressor(n_estimators=n_estimators,
+                                          min_samples_leaf=min_samples_leaf,
+                                          max_samples=max_samples,
+                                          n_jobs=2)
 
-        self.model = pipe
-
+        
+        model.fit(X_train, y_train)
+        self.model = model
+        
+        
     def predict(self, X_test):
         y_hat = self.model.predict(X_test)
 
         return y_hat
 
+    
     def get_params(self):
         """
         Returns a dictionary of the model parameters
@@ -74,8 +87,9 @@ class RFRegressor:
 
 class SVRRegressorRBF:
 
-    def __init__(self):
+    def __init__(self, scaler=StandardScaler()):
         self.algorithm = 'SVR'
+        self.scaler = scaler
 
     def create_svr_grid(self, C, gamma, cv):
         """
@@ -83,7 +97,7 @@ class SVRRegressorRBF:
         """
 
         steps = [
-            ('scaler', StandardScaler()),
+            ('scaler', self.scaler),
             ('svr', SVR(kernel='rbf', cache_size=500))
         ]
 
@@ -121,11 +135,9 @@ class SVRRegressorRBF:
         else:
             model = SVR(kernel='rbf', cache_size=500, C=C, gamma=gamma)
         
-        scaler = StandardScaler()
-        scaler.fit(X_train)
-        self.scaler = scaler
+        self.scaler.fit(X_train)
         
-        X_train_norm = scaler.transform(X_train)
+        X_train_norm = self.scaler.transform(X_train)
         model.fit(X_train_norm, y_train)
         
         self.model = model

@@ -76,6 +76,7 @@ def run_general_pct_model(
     drop_corr_features=True,
     encoding_method='one-hot',
     drop=True,
+    feature_pct_change=0,
     year_range=(2008, 2017),
 ):
     
@@ -88,6 +89,7 @@ def run_general_pct_model(
             drop_corr_features=drop_corr_features,
             encoding_method=encoding_method,
             drop=drop,
+            feature_pct_change=feature_pct_change,
             year_range=year_range)
 
         # Defining random state for shuffling data
@@ -117,6 +119,7 @@ def run_sector_pct_model(
     drop_corr_features=True,
     encoding_method='one-hot',
     drop=True,
+    feature_pct_change=0,
     year_range=(2008, 2017),
 ):
     
@@ -132,6 +135,7 @@ def run_sector_pct_model(
             drop_corr_features=drop_corr_features,
             encoding_method=encoding_method,
             drop=drop,
+            feature_pct_change=feature_pct_change,
             year_range=year_range)
         
         all_scores[n_months] = {}
