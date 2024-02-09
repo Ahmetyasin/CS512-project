@@ -2,6 +2,9 @@
 
 **Team members**: Ahmet Yasin Aytar, Halil Ibrahim Ergül, Yasser Zouzou
 
+## Project Paper
+https://github.com/Ahmetyasin/CS512-project/blob/main/docs/Sectoral_Growth_Paper.pdf
+
 ## Introduction
 Considering the complicated outlook that Turkey’s economy goes through these years, there has been a significant increase in the general public's interest in the stock market. It became tremendously prevelant for an average person to get involved in the stock market. For instance, according to observations of a newspaper (Habertürk), the number of young people who buy and sell shares in the stock market increased by 340%, exceeding 357 thousand. Therefore, informed decisions about buying, selling, or holding onto stocks is essential in bringing profits. What is more, making informed and solid predictions of stock value can also be important for businesses, as the value of their stocks can impact the company's access to capital and its policy of stocks. Overall, predicting stock value is important for both individual investors and businesses as it can impact decision-making and financial outcomes. These reasons motivated us to use of machine learning models for the purpose of this task.
 
